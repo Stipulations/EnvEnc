@@ -7,8 +7,7 @@
 
 - Encrypt environment variables before storing them.
 - Automatically decrypt environment variables when needed.
-- Support for secure key generation using passwords and SHA-256.
-- Random nonce generation to ensure encryption security.
+- Support for secure key and nonce generation using passwords.
 
 ## Usage
 
