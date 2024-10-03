@@ -17,7 +17,7 @@ Add `envenc` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-envenc = "0.0.1"
+envenc = "0.0.2"
 ```
 ## Usage/Examples
 #### Below is an example of how to encrypt, decrypt, and read environment variables using EnvEnc:
