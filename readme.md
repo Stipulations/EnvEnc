@@ -1,47 +1,64 @@
 
 # EnvEnc - Secure Environment Variable Management
 
-**EnvEnc** is a Rust crate that helps you securely encrypt and decrypt environment variables using the ChaCha20-Poly1305 encryption scheme. Store sensitive information like API keys, database credentials, and other configuration secrets in your `.env` file in a secure, encrypted format.
+**EnvEnc** is a Rust crate that helps you securely encrypt and decrypt environment variables using the ChaCha20-Poly1305 or AES256-GCM encryption schemes. Store sensitive information like API keys, database credentials, and other configuration secrets in your `.env` file in a secure, encrypted format.
 
 ## Features
 
 - Encrypt environment variables before storing them.
 - Automatically decrypt environment variables when needed.
-- Support for secure key and nonce generation using passwords.
+- Support for secure key and nonce generation.
+- Support for multiple encryption algorithms.
 
-## Usage
-
-### Installation
+## Installation
 
 Add `envenc` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-envenc = "0.0.2"
+envenc = "0.0.3"
 ```
 ## Usage/Examples
 #### Below is an example of how to encrypt, decrypt, and read environment variables using EnvEnc:
 
 ```rust
-use envenc::{decrypt_env, key_gen, nonce_gen, read_env, read_env_enc, set_enc_env};
+use envenc::{decrypt_env, keys_generation, read_env, read_env_enc, set_enc_env, CipherType};
 
 fn main() {
-    // Generate encryption key from a password
-    let encryption_key = key_gen("encryption_password");
+    // Choose cipher type
+    let cipher_type = CipherType::AES256GCM; // or CipherType::ChaCha20Poly1305
 
-    // Generate a nonce from a separate password
-    let nonce = nonce_gen("nonce_password");
+    // Generate or retrieve encryption key and nonce
+    let (key, nonce) = keys_generation(cipher_type);
 
     // Encrypt and set environment variables
-    set_enc_env("DATABASE_URL", "postgres://user:password@localhost/db", encryption_key, nonce);
-    set_enc_env("API_KEY", "super_secret_api_key", encryption_key, nonce);
-    set_enc_env("CACHE_SERVER", "redis://localhost:6379", encryption_key, nonce);
+    set_enc_env(
+        "DATABASE_URL",
+        "postgres://user:password@localhost/db",
+        cipher_type,
+        &key,
+        &nonce,
+    );
+    set_enc_env(
+        "API_KEY",
+        "super_secret_api_key",
+        cipher_type,
+        &key,
+        &nonce,
+    );
+    set_enc_env(
+        "CACHE_SERVER",
+        "redis://localhost:6379",
+        cipher_type,
+        &key,
+        &nonce,
+    );
 
     // Read the encrypted environment variables from the .env file
     let encrypted_env = read_env_enc();
 
     // Decrypt the environment variables using the key and nonce
-    decrypt_env(encrypted_env, encryption_key, nonce);
+    decrypt_env(encrypted_env, cipher_type, &key, &nonce);
 
     // Read the decrypted values from the environment variables
     let database_url = read_env("DATABASE_URL").unwrap_or("DATABASE_URL not found".to_string());
