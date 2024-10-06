@@ -7,8 +7,7 @@
 
 - Encrypt environment variables before storing them.
 - Automatically decrypt environment variables when needed.
-- Support for secure key generation using passwords and SHA-256.
-- Random nonce generation to ensure encryption security.
+- Support for secure key and nonce generation using passwords.
 
 ## Usage
 
@@ -18,7 +17,7 @@ Add `envenc` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-envenc = "0.0.1"
+envenc = "0.0.2"
 ```
 ## Usage/Examples
 #### Below is an example of how to encrypt, decrypt, and read environment variables using EnvEnc:
