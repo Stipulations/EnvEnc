@@ -1,13 +1,13 @@
 [package]
 name = "envenc"
-version = "0.0.2"
+version = "0.0.3"
 edition = "2021"
-description = "A crate for managing encrypted environment variables."
+description = "A crate for managing encrypted environment variables using either AES or ChaCha20Poly1305"
 documentation = "https://docs.rs/envenc"
 repository = "https://github.com/Stipulations/EnvEnc"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
-keywords = ["encryption", "environment", "security", "dotenv"]
+keywords = ["encryption", "environment", "security", "dotenv", "chacha20poly1305", "aes"]
 
 [dependencies]
 chacha20poly1305 = "0.10.1"
