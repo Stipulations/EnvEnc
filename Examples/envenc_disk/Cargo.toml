@@ -1,0 +1,8 @@
+[package]
+name = "envenc_disk"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+envenc = "0.0.3"
+hex = "0.4.3"
